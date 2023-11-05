@@ -38,7 +38,5 @@ class ToDoViewModel {
     return _toDoRepo.deleteAllToDoItme();
   }
 
-  Future<bool> deleteAllHistoryToDoItme() {
-    return _toDoRepo.deleteAllHistoryToDoItme();
-  }
+ 
 }

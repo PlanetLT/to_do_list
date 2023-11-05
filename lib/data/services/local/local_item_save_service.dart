@@ -9,12 +9,6 @@ abstract class LocalToDoService {
 
   Future deleteAllToDoList();
 
-  Future<bool> deleteAllHistoryItem();
-
-  // Stream<List<ToDoItem>> subscribeToDoList();
-  // Stream<List<ToDoItem>> subscribeUnDoneToDoList();
-  // Stream<List<ToDoItem>> subscribeDoneToDoList();
-
   Future<bool> addToDoItem(ToDoItem toDoItem);
   Future<bool> deleteToDoItme(index);
   Future<bool> updateToDoItme(ToDoItem toDoItem, int index);
@@ -85,14 +79,5 @@ class LocalToDoServiceImpl implements LocalToDoService {
     return true;
   }
 
-  @override
-  Future<bool> deleteAllHistoryItem() async {
-    var tBox = await box;
-    var doneToDoList =
-        _filterAndSort().where((item) => item.isDone == true).toList();
-    for (var i = 0; i < doneToDoList.length; i++) {
-      tBox.deleteAt(i);
-    }
-    return true;
-  }
+ 
 }

@@ -7,7 +7,6 @@ abstract class ToDoRepository {
   Future<bool> addToDoItme(ToDoItem toDoItem);
   Future<bool> updateToDoItme(ToDoItem toDoItem, int index);
   Future<bool> deleteAllToDoItme();
-  Future<bool> deleteAllHistoryToDoItme();
 
   Future<List<ToDoItem>> subscribeAllToDoList();
   Future<List<ToDoItem>> subscribeUnDoneToDoList();
@@ -51,10 +50,6 @@ class ToDoRepositoryImpl implements ToDoRepository {
     return local.updateToDoItme(toDoItem, index);
   }
 
-  @override
-  Future<bool> deleteAllHistoryToDoItme() {
-    return local.deleteAllHistoryItem();
-  }
 
   @override
   Future<bool> deleteAllToDoItme() async {

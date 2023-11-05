@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:to_do_list/data/models/to_do_item.dart';
-import 'package:to_do_list/data/notifications/local/noti_channel.dart';
 import 'package:to_do_list/viewmodels/auth_vm.dart';
 import 'package:to_do_list/viewmodels/to_do_vm.dart';
 import 'package:to_do_list/views/customs/td_au_bottom_sheet_dialog.dart';
@@ -19,7 +18,6 @@ class HomeController extends GetxController {
   var actionUpdate = "Update";
   var actionDelete = "Delete";
   var actionDeleteAllData = "DeleteAllData";
-  var actionDeleteAllHistoryData = "DeleteAllHistoryData";
   var selectedActionItem = "Add".obs;
   RxnString selectedPriorityItem = RxnString();
   Rxn<String> currentUserName = Rxn<String>();
@@ -121,17 +119,10 @@ class HomeController extends GetxController {
     }
   }
 
-  void deleteAllHistoryData() async {
-    bool condition = await toDoVM.deleteAllHistoryToDoItme();
-    if (condition) {
-      clearCashAndRefresh();
-      showAlertDialog("Delete all history successfully.", true);
-    } else {
-      showAlertDialog("Deleting fail.", false);
-    }
-  }
+  
 
   void checkAddorUpdateToDoItme() async {
+    FocusManager.instance.primaryFocus!.unfocus();
     var title = titleController.text;
     var desc = descriptionController.text;
     var date = dateController.text;
@@ -186,21 +177,9 @@ class HomeController extends GetxController {
     } else if (selectedActionItem.value == actionDelete) {
       deleteToDoItme(index);
       clearCashAndRefresh();
-    } else if (selectedActionItem.value == actionDeleteAllHistoryData) {
-      deleteAllHistoryData();
     } else if (selectedActionItem.value == actionDeleteAllData) {
       deleteAllData();
     }
-  }
-
-  void showNoti() {
-    LocalNotificationMessage(
-      "nnnnn",
-      "title",
-      "message",
-      image: null,
-      channel: Channel.test,
-    ).showNotification();
   }
 
   @override

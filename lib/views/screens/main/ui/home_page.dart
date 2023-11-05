@@ -14,44 +14,19 @@ class HomePage extends GetView<HomeController> {
   Widget build(BuildContext context) {
     return Scaffold(
         backgroundColor: TDColors.backgroundColor,
-        body: SafeArea(
-            child: Column(
-          mainAxisSize: MainAxisSize.max,
-          children: [
-            headerWidget(),
-            const SizedBox(height: 20),
-            SizedBox(
-              height: 50,
-              child: Center(child: indicatior()),
+        appBar: AppBar(
+          backgroundColor: TDColors.backgroundColor,
+          elevation: 0,
+          title: Obx(
+            () => TDText(
+              color: TDColors.mainColor,
+              text: "Welcome,${controller.currentUserName}",
+              fontSize: TDFontSize.getHeadTitleFontSize(),
+              isBold: true,
+              textAlign: TextAlign.start,
             ),
-            SizedBox(
-              height: Get.height - 140,
-              child: Obx(() => PageView(
-                    controller: controller.pageController,
-                    children: [toDoListWidget(), historyListWidget()],
-                    onPageChanged: (int index) {
-                      controller.activePage.value = index;
-                    },
-                  )),
-            )
-          ],
-        )));
-  }
-
-  Widget headerWidget() => Padding(
-        padding: const EdgeInsets.only(left: 20, right: 20),
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            Obx(
-              () => TDText(
-                color: TDColors.mainColor,
-                text: "Welcome,${controller.currentUserName}",
-                fontSize: TDFontSize.getHeadTitleFontSize(),
-                isBold: true,
-                textAlign: TextAlign.start,
-              ),
-            ),
+          ),
+          actions: [
             SizedBox(
               child: PopupMenuButton<String>(
                 initialValue: controller.selectedActionItem.value,
@@ -64,28 +39,41 @@ class HomePage extends GetView<HomeController> {
                     value: "DeleteAllData",
                     child: Text('Delete All Data'),
                   ),
-                  const PopupMenuItem<String>(
-                    value: "DeleteAllHistoryData",
-                    child: Text('Delete All History Data'),
-                  ),
                 ],
-                child: const Icon(
-                  Icons.settings,
-                  size: 30,
-                  color: TDColors.mainColor,
+                child: const Padding(
+                  padding: EdgeInsets.only(right: 10),
+                  child: Icon(
+                    Icons.settings,
+                    size: 26,
+                    color: TDColors.mainColor,
+                  ),
                 ),
               ),
             )
           ],
         ),
-      );
+        body: Column(
+          children: [
+            SizedBox(
+              height: 50,
+              child: Center(child: indicatior()),
+            ),
+            SizedBox(
+              height: Get.height - 150,
+              child: Obx(() => PageView(
+                    controller: controller.pageController,
+                    children: [toDoListWidget(), historyListWidget()],
+                    onPageChanged: (int index) {
+                      controller.activePage.value = index;
+                    },
+                  )),
+            )
+          ],
+        ));
+  }
 
-  Widget indicatior() => Obx(() => Positioned(
-        bottom: 0,
-        left: 0,
-        right: 0,
-        height: 100,
-        child: Container(
+  Widget indicatior() => Obx(
+        () => Container(
           width: Get.width / 2 + 20,
           padding: const EdgeInsets.only(top: 5, bottom: 5),
           decoration: BoxDecoration(
@@ -152,7 +140,7 @@ class HomePage extends GetView<HomeController> {
                     )),
           ),
         ),
-      ));
+      );
 
   Widget toDoListWidget() => Container(
       height: Get.height - 100,
